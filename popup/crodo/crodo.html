@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="/assets/shared/shared.css">
+    <link rel="stylesheet" href="/popup/crodo/crodo.css">
+    <title>Crodo</title>
+</head>
+<body>
+    <div class="main">
+        <div class="pop">
+            <p class="content"></p>
+        </div>
+        <div class="header">
+            <div class="title">
+                <p>Crodo</p>
+            </div>
+            
+            <div class="user">
+                <p>shahriyardx</p>
+                <div class="logout">
+                    <i class='bx bx-log-out-circle bx-rotate-180 logout-button' ></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="todos-wrapper">
+            <div class="add-form">
+                <div class="add">
+                    <input type="text" class="todo-text" name="todo" placeholder="Your crodo here..." autocomplete="off">
+                    <div class="add-button" title="Add new crodo">
+                        <i class='bx bx-list-plus' ></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="separator">
+                Crodos
+            </div>
+
+            <div class="todos">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/popup/crodo/crodo.js"></script>
+</body>
+</html>

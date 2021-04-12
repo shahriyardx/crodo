@@ -1,0 +1,179 @@
+.pop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #23272ae3;
+  display: none;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.pop .content {
+  text-align: left;
+  width: 380px;
+  padding: 10px;
+  background-color: #2F3138;
+  font-size: 18px;
+}
+
+.todos-wrapper {
+  padding: 20px;
+  width: 100%;
+  height: calc(600px - var(--header-height));
+}
+
+.todos-wrapper .add-form .add {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 320px 40px;
+      grid-template: 1fr / 320px 40px;
+}
+
+.todos-wrapper .add-form .add input {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.todos-wrapper .add-form .add .add-button {
+  width: 40px;
+  height: 40px;
+  background: var(--green);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.todos-wrapper .add-form .add .add-button i {
+  font-size: 20px;
+}
+
+.todos-wrapper .separator {
+  margin: 30px 0;
+  text-align: center;
+  position: relative;
+  font-size: 20px;
+  color: var(--orange);
+}
+
+.todos-wrapper .separator::before {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: var(--orange);
+}
+
+.todos-wrapper .separator::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  background: var(--orange);
+}
+
+.todos-wrapper .separator::before {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: var(--orange);
+}
+
+.todos-wrapper .todos {
+  width: 100%;
+  height: 380px;
+  overflow-y: scroll;
+}
+
+.todos-wrapper .todos::-webkit-scrollbar {
+  display: none;
+}
+
+.todos-wrapper .todos .todo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  background: var(--green);
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.todos-wrapper .todos .todo p {
+  width: 100%;
+  height: 40px;
+  background: var(--secondary-color);
+  padding: 0px 10px;
+  padding-top: 9px;
+  font-size: 15px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.todos-wrapper .todos .todo .done {
+  width: 40px;
+  height: 40px;
+  font-size: 15px;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: var(--green);
+  top: 0;
+  right: -35px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+.todos-wrapper .todos .todo .done i {
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.todos-wrapper .todos .todo:hover .done {
+  right: 0px;
+}
+/*# sourceMappingURL=crodo.css.map */

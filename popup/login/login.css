@@ -1,0 +1,79 @@
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+.main .preloader {
+  width: 100%;
+  height: 100%;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main .login {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main .login .login__wrapper {
+  text-align: center;
+  padding: 0px 20px;
+}
+
+.main .login .login__wrapper .login__header {
+  margin-bottom: 20px;
+}
+
+.main .login .login__wrapper .login__header h1 {
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+
+.main .login .login__wrapper .login__form .reg {
+  display: none;
+}
+
+.main .login .login__wrapper .login__form form input[type="text"],
+.main .login .login__wrapper .login__form form input[type="email"],
+.main .login .login__wrapper .login__form form input[type="password"] {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  padding: 10px;
+  outline: none;
+  border: none;
+}
+
+.main .login .login__wrapper .login__form .alert {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+  display: none;
+}
+
+.main .login .login__wrapper .login__form .alert.success {
+  background: rgba(67, 181, 129, 0.2);
+  color: rgba(67, 181, 129, 0.8);
+}
+
+.main .login .login__wrapper .login__form .alert.danger {
+  background: rgba(240, 71, 71, 0.2);
+  color: rgba(240, 71, 71, 0.8);
+}
+/*# sourceMappingURL=login.css.map */
