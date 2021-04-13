@@ -6,36 +6,25 @@ const logout_button = document.querySelector('.logout-button')
 
 const API_BASE = 'https://crodo.shahriyar.dev'
 
-chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME"], async function(data) {
+chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME", "TODOS"], async function(data) {
     username.textContent = data.USERNAME
 
-    const url = API_BASE + "/todo/list/"
-    fetch(url, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-            "Authorization": data.AUTH_TOKEN
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        todos = data['todos']
+    TODOS = data.TODOS ? data.TODOS : []
 
-        let html = ""
+    let html = ""
 
-        todos.forEach(todo => {
-            html += `
-            <div class="todo">
-                <p>${todo[1]}</p>
-                <div class="done" data-tid=${todo[0]}>
-                    <i class='bx bx-check'></i>
-                </div>
+    TODOS.forEach(todo => {
+        html += `
+        <div class="todo">
+            <p>${todo[1]}</p>
+            <div class="done" data-tid=${todo[0]}>
+                <i class='bx bx-check'></i>
             </div>
-            `
-        });
+        </div>
+        `
+    });
 
-        todos_elem.innerHTML = html
-    })
+    todos_elem.innerHTML = html
 
     add_button.addEventListener('click', e => {
         e.preventDefault()
@@ -78,11 +67,22 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME"], async function(d
             `
 
             todos_elem.innerHTML += html
+
+            TODOS.push([todo_id, todo_text])
+
+            chrome.storage.local.set({
+                TODOS: TODOS
+            })
         })
     })
     
     todos_elem.addEventListener('click', e => {
         if (e.target.classList.contains('done')) {
+            target = e.target.querySelector('i')
+
+            target.classList.remove('bx-check')
+            target.classList.add('bx-loader-circle')
+
             const tid = e.target.dataset.tid
             const url = API_BASE + "/todo/complete/"
 
@@ -101,6 +101,17 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME"], async function(d
                 }
 
                 e.target.parentElement.remove()
+
+                chrome.storage.local.get('TODOS', async function(todos) {
+                    todos = todos['TODOS']
+
+                    filtered_todos = todos.filter(todo => todo[0] != tid)
+                    console.log(filtered_todos)
+
+                    chrome.storage.local.set({
+                        TODOS: filtered_todos
+                    })
+                })
             })
         }
 
@@ -126,7 +137,10 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME"], async function(d
 })
 
 logout_button.addEventListener('click', e => {
-    chrome.storage.local.clear()
+    chrome.storage.local.set({
+        AUTH_TOKEN : '',
+        TODOS: []
+    })
 
     window.location.href = "/popup/login/login.html"
 })

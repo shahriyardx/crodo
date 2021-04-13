@@ -22,9 +22,19 @@
 .pop .content {
   text-align: left;
   width: 380px;
+  max-height: 400px;
   padding: 10px;
   background-color: #2F3138;
   font-size: 18px;
+  overflow-y: scroll;
+}
+
+.pop .content::-webkit-scrollbar {
+  width: 2px;
+}
+
+.pop .content::-webkit-scrollbar-thumb {
+  background-color: #8f8f8f;
 }
 
 .todos-wrapper {

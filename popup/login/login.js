@@ -12,8 +12,18 @@ const login = document.querySelector('.login')
 
 const API_BASE = 'https://crodo.shahriyar.dev'
 
-chrome.storage.local.get(['AUTH_TOKEN', 'USER_ID', 'USERNAME'], async function(data) {
+chrome.storage.local.get(['AUTH_TOKEN', 'USER_ID', 'USERNAME', 'PASSWORD', 'SAVE_INFO'], async function(data) {
     AUTH_TOKEN = data.AUTH_TOKEN ? data.AUTH_TOKEN : ''
+    USERNAME = data.USERNAME ? data.USERNAME : ''
+    PASSWORD = data.PASSWORD ? data.PASSWORD : ''
+    SAVE_INFO = data.SAVE_INFO ? data.SAVE_INFO : false
+
+    login_form.username.value = USERNAME
+
+    if (SAVE_INFO) {    
+        login_form.password.value = PASSWORD
+        login_form.save.checked = SAVE_INFO
+    }
 
     if (AUTH_TOKEN != '') {
         window.location.href = '/popup/crodo/crodo.html'
@@ -44,6 +54,7 @@ login_button.addEventListener('click', e => {
 
     username = login_form.username.value.trim()
     password = login_form.password.value
+    save_info = login_form.save.checked
 
     const alert_box = login_form.querySelector('.alert')
     const url = API_BASE + '/authorize/'
@@ -81,14 +92,40 @@ login_button.addEventListener('click', e => {
         alert_box.classList.add('success')
         alert_box.textContent = "Login success"
         alert_box.style.display = "block"
-
-        chrome.storage.local.set({
-            AUTH_TOKEN: data['token'],
-            USER_ID: data['user_id'],
-            USERNAME: username
+        
+        const url = API_BASE + "/todo/list/"
+        fetch(url, {
+            method: "GET",
+            mode: "cors",
+            headers: {
+                "Authorization": data['token']
+            }
         })
+        .then(response => response.json())
+        .then(tododata => {
+            todos = tododata['todos']
 
-        window.location.href = '/popup/crodo/crodo.html'
+            chrome.storage.local.set({
+                AUTH_TOKEN: data['token'],
+                USER_ID: data['user_id'],
+                USERNAME: username,
+                TODOS: todos
+            })
+
+            if (save_info) {
+                chrome.storage.local.set({
+                    PASSWORD : password,
+                    SAVE_INFO: save_info
+                })
+            } else {
+                chrome.storage.local.set({
+                    PASSWORD : '',
+                    SAVE_INFO: ''
+                })
+            }
+    
+            window.location.href = '/popup/crodo/crodo.html'
+        })
     })
 
     
