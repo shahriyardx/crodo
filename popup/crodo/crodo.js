@@ -1,6 +1,7 @@
 const username = document.querySelector('.user p')
 const todos_elem = document.querySelector('.todos')
 
+const add_todo_form = document.querySelector('.add-todo-form')
 const add_button = document.querySelector('.add-form .add-button')
 const logout_button = document.querySelector('.logout-button')
 
@@ -27,14 +28,47 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME", "TODOS"], async f
     todos_elem.innerHTML = html
 
     add_button.addEventListener('click', e => {
+        e.preventDefault();
+        add_todo(e);
+    })
+
+    function getClass(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var charactersLength = characters.length;
+
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+       return result;
+    }
+    
+    add_todo_form.addEventListener('submit', e => {
         e.preventDefault()
-        
+
+        add_todo(e);
+    })
+
+    function add_todo(e) {
         const todo_field = document.querySelector('.todo-text')
         const todo_text = todo_field.value.trim()
     
         if (todo_text == '') {
             return
         }
+
+        var u_id = getClass(5)
+        todo_field.value = ""
+
+        let html = `
+        <div class="todo ${u_id}">
+            <p>${todo_text}</p>
+            <div class="done" data-tid="">
+                <i class='bx bx-check'></i>
+            </div>
+        </div>
+        `
+        todos_elem.innerHTML += html
     
         const url = API_BASE + "/todo/create/"
     
@@ -53,20 +87,12 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME", "TODOS"], async f
             if (data['error']) {
                 return
             }
-            
-            todo_field.value = ""
 
             const todo_id = data['todo_id']
-            let html = `
-            <div class="todo">
-                <p>${todo_text}</p>
-                <div class="done" data-tid=${todo_id}>
-                    <i class='bx bx-check'></i>
-                </div>
-            </div>
-            `
-
-            todos_elem.innerHTML += html
+            
+            pending_todo = document.querySelector(`.${u_id}`)
+            pending_todo.classList.remove(u_id)
+            pending_todo.querySelector('.done').setAttribute('data-tid', todo_id)
 
             TODOS.push([todo_id, todo_text])
 
@@ -74,14 +100,16 @@ chrome.storage.local.get(["AUTH_TOKEN", "USER_ID", "USERNAME", "TODOS"], async f
                 TODOS: TODOS
             })
         })
-    })
-    
+    }
+
     todos_elem.addEventListener('click', e => {
         if (e.target.classList.contains('done')) {
-            target = e.target.querySelector('i')
+            e.target.classList.add('active')
 
-            target.classList.remove('bx-check')
-            target.classList.add('bx-loader-circle')
+            icon = e.target.querySelector('i')
+
+            icon.classList.remove('bx-check')
+            icon.classList.add('bx-loader-circle')
 
             const tid = e.target.dataset.tid
             const url = API_BASE + "/todo/complete/"

@@ -183,6 +183,11 @@
   pointer-events: none;
 }
 
+.todos-wrapper .todos .todo .done.active {
+  right: 0px;
+  width: 360px;
+}
+
 .todos-wrapper .todos .todo:hover .done {
   right: 0px;
 }
